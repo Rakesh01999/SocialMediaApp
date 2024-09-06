@@ -35,6 +35,9 @@ const style = StyleSheet.create({
         lineHeight: 7,
         fontWeight: 600,
         color: '#FFFFFF'
+    },
+    useHistoryContainer:{
+        paddingHorizontal:28
     }
 })
 
