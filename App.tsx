@@ -11,15 +11,25 @@ import {
 } from 'react-native';
 
 import Title from './components/Title/Title';
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 
 const App = () => {
   return (
     <SafeAreaView>
-      <View>
-        {/* <Text style={{ fontFamily: 'Inter-Black' }}>Hello World</Text> */}
-        <Title title={"Let's Explore"}/>
-      </View>
+      <ScrollView>
+        <View style={{
+          paddingTop:30,
+          paddingLeft:17,
+          paddingRight:26,
+          flex:1, 
+          flexDirection:'row', 
+          alignItems:'center',
+          justifyContent: 'space-between'}}>
+          <Title title={"Let's Explore"} />
+          <FontAwesomeIcon icon={faEnvelope} />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
