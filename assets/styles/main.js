@@ -36,9 +36,15 @@ const style = StyleSheet.create({
         fontWeight: 600,
         color: '#FFFFFF'
     },
-    useHistoryContainer:{
-        paddingHorizontal:28,
-        marginTop:12
+    useStoryContainer: {
+        paddingHorizontal: 28,
+        marginTop: 12,
+        height: 100
+    },
+    userPostContainer: {
+        marginTop: 30,
+        height: '100%',
+        paddingHorizontal: 24
     }
 })
 

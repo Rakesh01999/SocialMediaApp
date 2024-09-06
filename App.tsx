@@ -58,17 +58,72 @@ const App = () => {
       id: 9,
     }
   ];
+  const posts = [
+    {
+      firsName: 'Allison',
+      lastName: 'Becker',
+      location: 'Sukumbai, Jawa Barat',
+      likes: 1201,
+      comments: 24,
+      bookmark: 55,
+      id: 1
+    },
+    {
+      firsName: 'Jennifer',
+      lastName: 'Wilkson',
+      location: 'Pondok Leungsir, Jawa Barat',
+      likes: 570,
+      comments: 12,
+      bookmark: 60,
+      id: 2
+    },
+    {
+      firsName: 'Adam',
+      lastName: 'Spera',
+      location: 'Boston,Massachusetts',
+      likes: 100,
+      comments: 8,
+      bookmark: 7,
+      id: 3
+    },
+    {
+      firsName: 'Nata',
+      lastName: 'Vacheishvili',
+      location: 'New York, New York',
+      likes: 300,
+      comments: 18,
+      bookmark: 17,
+      id: 4
+    },
+    {
+      firsName: 'Nicolas',
+      lastName: 'Namoradze',
+      location: 'Berlin, Germany',
+      likes: 1240,
+      comments: 56,
+      bookmark: 20,
+      id: 5
+    },
+  ];
   const pageSize = 4;
+  const pageSizePosts = 2;
   const [pageNumber, setPageNumber] = useState(1);
+  const [postPageNumber, setPostPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingPosts, setIsLoadingPosts] = useState(false);
   const [renderData, setRenderData] = useState(data.slice(0, pageSize));
-  const pagination = (data, pageNumber, pageSize) => {
+  const [renderDataPosts, setRenderDataPosts] = useState(posts.slice(0, pageSize));
+  const pagination = (data, pageNumber, pageSize, posts = false) => {
     let startIndex = (pageNumber - 1) * pageSize;
     // console.log(startIndex,renderData.length)
     if (startIndex > data.length) {
       return [];
     }
-    setPageNumber(pageNumber );
+    if(!posts){
+      setPageNumber(pageNumber);
+    }else{
+      setPostPageNumber(pageNumber)
+    }
     return data.slice(startIndex, startIndex + pageSize);
   };
   return (
@@ -91,7 +146,7 @@ const App = () => {
             </View>
           </Pressable>
         </View>
-        <View style={style.useHistoryContainer}>
+        <View style={style.useStoryContainer}>
           <FlatList
             onEndReachedThreshold={0.5}
             keyExtractor={(item) => item.id.toString()}
@@ -107,6 +162,8 @@ const App = () => {
             data={renderData}
             renderItem={({ item }) => <UserStory firstName={item.firstName} />}></FlatList>
         </View>
+
+        <View style={style.userPostContainer}></View>
       </ScrollView>
     </SafeAreaView>
   );
