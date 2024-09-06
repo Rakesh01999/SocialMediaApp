@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import style from './assets/styles/main';
 import UserStory from './components/UserStory/UserStory';
+import UserPost from './components/UserPost/UserPost';
 
 const App = () => {
   // All of the items in our stories
@@ -60,7 +61,7 @@ const App = () => {
   ];
   const posts = [
     {
-      firsName: 'Allison',
+      firstName: 'Allison',
       lastName: 'Becker',
       location: 'Sukumbai, Jawa Barat',
       likes: 1201,
@@ -69,7 +70,7 @@ const App = () => {
       id: 1
     },
     {
-      firsName: 'Jennifer',
+      firstName: 'Jennifer',
       lastName: 'Wilkson',
       location: 'Pondok Leungsir, Jawa Barat',
       likes: 570,
@@ -78,7 +79,7 @@ const App = () => {
       id: 2
     },
     {
-      firsName: 'Adam',
+      firstName: 'Adam',
       lastName: 'Spera',
       location: 'Boston,Massachusetts',
       likes: 100,
@@ -87,7 +88,7 @@ const App = () => {
       id: 3
     },
     {
-      firsName: 'Nata',
+      firstName: 'Nata',
       lastName: 'Vacheishvili',
       location: 'New York, New York',
       likes: 300,
@@ -96,7 +97,7 @@ const App = () => {
       id: 4
     },
     {
-      firsName: 'Nicolas',
+      firstName: 'Nicolas',
       lastName: 'Namoradze',
       location: 'Berlin, Germany',
       likes: 1240,
@@ -119,9 +120,9 @@ const App = () => {
     if (startIndex > data.length) {
       return [];
     }
-    if(!posts){
+    if (!posts) {
       setPageNumber(pageNumber);
-    }else{
+    } else {
       setPostPageNumber(pageNumber)
     }
     return data.slice(startIndex, startIndex + pageSize);
@@ -160,10 +161,37 @@ const App = () => {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             data={renderData}
-            renderItem={({ item }) => <UserStory firstName={item.firstName} />}></FlatList>
+            renderItem={({ item }) => <UserStory firstName={item.firstName} />}>
+
+          </FlatList>
         </View>
 
-        <View style={style.userPostContainer}></View>
+        <View style={style.userPostContainer}>
+          <FlatList
+            onMomentumScrollBegin={() => setIsLoadingPosts(false)}
+            onEndReachedThreshold={0.5}
+            keyExtractor={(item) => item.id.toString()}
+            onEndReached={() => {
+              if (!isLoading) {
+                setIsLoadingPosts(true);
+                setRenderDataPosts(prev => [...prev, ...pagination(posts, pageNumber + 1, pageSize, true)])
+                setIsLoadingPosts(false);
+              }
+            }}
+            showsVerticalScrollIndicator={false}
+            data={renderDataPosts}
+            renderItem={({ item }) =>
+              <UserPost
+                firstName={item.firstName}
+                lastName={item.lastName}
+                comments={item.comments}
+                likes={item.likes} 
+                bookmarks= {item.bookmark}
+                location={item.location}
+                />}>
+
+          </FlatList>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
