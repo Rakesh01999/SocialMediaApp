@@ -12,12 +12,6 @@ const style = StyleSheet.create({
         fontSize: 14,
         lineHeight: 17,
         marginTop: 8
-    },
-    userImageContainer: {
-        borderWidth:1,
-        borderBlockColor:'#F35BAC',
-        padding: 3,
-        borderRadius: 50
     }
 });
 
