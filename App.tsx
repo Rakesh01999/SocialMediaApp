@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   FlatList,
@@ -16,10 +16,11 @@ import Title from './components/Title/Title';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import style from './assets/styles/main';
+import UserStory from './components/UserStory/UserStory';
 
 const App = () => {
   // All of the items in our stories
-  const data = [
+   const data = [
     {
       firstName: 'Joseph',
       id: 1,
@@ -57,6 +58,10 @@ const App = () => {
       id: 9,
     }
   ];
+  const pageSize= 4;
+  const [pageNumber, setPageNumber] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [renderData, setRenderData] = useState([]);
   return (
     <SafeAreaView>
       <ScrollView>
@@ -77,8 +82,12 @@ const App = () => {
             </View>
           </Pressable>
         </View>
-        <View>
-          {/* <FlatList data={} renderItem={}></FlatList> */}
+        <View style={style.useHistoryContainer}>
+          <FlatList 
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          data={data} 
+          renderItem={({item})=> <UserStory firstName={item.firstName} />}></FlatList>
         </View>
       </ScrollView>
     </SafeAreaView>
