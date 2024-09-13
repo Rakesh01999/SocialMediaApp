@@ -2,7 +2,7 @@
 # Social Media App
 
 -- Mobile Application Development
-React Native
+React Native -small project
 
 # To install React Dev Tools
 npm install -g react-devtools
