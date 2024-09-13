@@ -2,6 +2,11 @@
 # Social Media App
 
 -- Mobile Application Development
+React Native
+
+# To install React Dev Tools
+npm install -g react-devtools
+
 
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 

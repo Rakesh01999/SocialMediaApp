@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
+  Dimensions,
   FlatList,
   Pressable,
   SafeAreaView,
@@ -115,6 +116,16 @@ const App = () => {
   const [renderData, setRenderData] = useState(data.slice(0, pageSize));
   // const [renderDataPosts, setRenderDataPosts] = useState(posts.slice(0, pageSize));
   const [renderDataPosts, setRenderDataPosts] = useState(posts.slice(0, pageSizePosts));
+
+  const[screenData, setScreenData] = useState(Dimensions.get("screen"));
+  console.log(screenData);
+  useEffect(()=>{
+    Dimensions.addEventListener('change', (result)=> {
+      console.log('changed screen data', result.screen);
+      setScreenData(result.screen);
+    });
+  }, []);
+
   const pagination = (data, pageNumber, pageSize, posts = false) => {
     let startIndex = (pageNumber - 1) * pageSize;
     // console.log(startIndex,renderData.length)
@@ -142,13 +153,17 @@ const App = () => {
               <Pressable style={style.messageIcon}>
                 <FontAwesomeIcon icon={faEnvelope} color={'#CACDDE'} size={20} />
                 <View style={style.messageNumberContainer}>
-                  <Text style={{
+                  {/* <Text style={{
                     fontSize: 6,
                     fontFamily: 'Inter',
                     lineHeight: 7,
                     fontWeight: 600,
-                    color: '#FFFFFF'
-                  }}>
+                    color: '#FFFFFF',
+                  }}> */}
+                  <Text style={[
+                    style.messageNumber,
+                    {fontSize: screenData.height/130}
+                  ]}>
                     2
                   </Text>
                 </View>

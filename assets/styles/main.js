@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { horizontalScale, verticalScale } from './scaling';
 
 const style = StyleSheet.create({
     header: {
