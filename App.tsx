@@ -147,7 +147,8 @@ const App = () => {
   return (
     <SafeAreaView>
       {/* <ScrollView> */}
-
+      {/* <StatusBar backgroundColor={'blue'} barStyle={'light-content'} /> */}
+      <StatusBar backgroundColor={'yellow'} barStyle={'dark-content'} />
 
       <View style={style.userPostContainer}>
 
@@ -156,10 +157,10 @@ const App = () => {
             return <>
               <View style={style.header}>
                 <Title title={"Let's Explore"} />
-                <Switch value={isOn} onValueChange={(value) => setIsOn(value)} style={[Platform.OS === 'android' && {transform: [{scaleX: 1.8}, {scaleY:1.5}]}]}
-                trackColor={Platform.OS === 'android' && {false:'grey', true:'red'}}
+                <Switch value={isOn} onValueChange={(value) => setIsOn(value)} style={[Platform.OS === 'android' && { transform: [{ scaleX: 1.8 }, { scaleY: 1.5 }] }]}
+                  trackColor={Platform.OS === 'android' && { false: 'grey', true: 'red' }}
                 />
-        
+
                 <Pressable style={style.messageIcon}>
                   <FontAwesomeIcon icon={faEnvelope} color={'#CACDDE'} size={20} />
                   <View style={style.messageNumberContainer}>
