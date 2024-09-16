@@ -4,13 +4,14 @@ import { horizontalScale, verticalScale } from './scaling';
 
 const style = StyleSheet.create({
     header: {
+        // paddingTop: verticalScale(30),
         paddingTop: 30,
         paddingLeft: 17,
-        paddingRight: 26,
+        paddingRight: 24,
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     messageIcon: {
         backgroundColor: '#F9FAFB',

@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
   FlatList,
+  Platform,
   Pressable,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
+  Switch,
   Text,
   useColorScheme,
   View,
@@ -117,10 +119,13 @@ const App = () => {
   // const [renderDataPosts, setRenderDataPosts] = useState(posts.slice(0, pageSize));
   const [renderDataPosts, setRenderDataPosts] = useState(posts.slice(0, pageSizePosts));
 
-  const[screenData, setScreenData] = useState(Dimensions.get("screen"));
+  // console.log(Platform);
+  const [isOn, setIsOn] = useState(true);
+
+  const [screenData, setScreenData] = useState(Dimensions.get("screen"));
   console.log(screenData);
-  useEffect(()=>{
-    Dimensions.addEventListener('change', (result)=> {
+  useEffect(() => {
+    Dimensions.addEventListener('change', (result) => {
       console.log('changed screen data', result.screen);
       setScreenData(result.screen);
     });
@@ -143,79 +148,84 @@ const App = () => {
     <SafeAreaView>
       {/* <ScrollView> */}
 
+
       <View style={style.userPostContainer}>
 
-      <FlatList
-        ListHeaderComponent={() => {
-          return <>
-            <View style={style.header}>
-              <Title title={"Let's Explore"} />
-              <Pressable style={style.messageIcon}>
-                <FontAwesomeIcon icon={faEnvelope} color={'#CACDDE'} size={20} />
-                <View style={style.messageNumberContainer}>
-                  {/* <Text style={{
+        <FlatList
+          ListHeaderComponent={() => {
+            return <>
+              <View style={style.header}>
+                <Title title={"Let's Explore"} />
+                <Switch value={isOn} onValueChange={(value) => setIsOn(value)} style={[Platform.OS === 'android' && {transform: [{scaleX: 1.8}, {scaleY:1.5}]}]}
+                trackColor={Platform.OS === 'android' && {false:'grey', true:'red'}}
+                />
+        
+                <Pressable style={style.messageIcon}>
+                  <FontAwesomeIcon icon={faEnvelope} color={'#CACDDE'} size={20} />
+                  <View style={style.messageNumberContainer}>
+                    {/* <Text style={{
                     fontSize: 6,
                     fontFamily: 'Inter',
                     lineHeight: 7,
                     fontWeight: 600,
                     color: '#FFFFFF',
                   }}> */}
-                  <Text style={[
-                    style.messageNumber,
-                    {fontSize: screenData.height/130}
-                  ]}>
-                    2
-                  </Text>
-                </View>
-              </Pressable>
+                    <Text style={[
+                      style.messageNumber,
+                      { fontSize: screenData.height / 130 }
+                    ]}>
+                      2
+                    </Text>
+                  </View>
+                </Pressable>
+              </View>
+              <View style={style.useStoryContainer}>
+                <FlatList
+                  onEndReachedThreshold={0.5}
+                  keyExtractor={(item) => item.id.toString()}
+                  onEndReached={() => {
+                    if (!isLoading) {
+                      setIsLoading(true);
+                      setRenderData(prev => [...prev, ...pagination(data, pageNumber + 1, pageSize)])
+                      setIsLoading(false);
+                    }
+                  }}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                  data={renderData}
+                  renderItem={({ item }) => <UserStory firstName={item.firstName} />}>
+
+                </FlatList>
+              </View>
+            </>
+          }}
+          onMomentumScrollBegin={() => setIsLoadingPosts(false)}
+          onEndReachedThreshold={0.5}
+          keyExtractor={(item) => item.id.toString()}
+          onEndReached={() => {
+            if (!isLoadingPosts) {
+              setIsLoadingPosts(true);
+              setRenderDataPosts(prev => [...prev, ...pagination(posts, postPageNumber + 1, pageSizePosts, true)])
+              setIsLoadingPosts(false);
+            }
+          }}
+          showsVerticalScrollIndicator={false}
+          data={renderDataPosts}
+          renderItem={({ item }) => (
+            <View >
+
+              <UserPost
+
+                firstName={item.firstName}
+                lastName={item.lastName}
+                comments={item.comments}
+                likes={item.likes}
+                bookmarks={item.bookmark}
+                location={item.location}
+              />
             </View>
-            <View style={style.useStoryContainer}>
-              <FlatList
-                onEndReachedThreshold={0.5}
-                keyExtractor={(item) => item.id.toString()}
-                onEndReached={() => {
-                  if (!isLoading) {
-                    setIsLoading(true);
-                    setRenderData(prev => [...prev, ...pagination(data, pageNumber + 1, pageSize)])
-                    setIsLoading(false);
-                  }
-                }}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                data={renderData}
-                renderItem={({ item }) => <UserStory firstName={item.firstName} />}>
 
-              </FlatList>
-            </View>
-          </>
-        }}
-        onMomentumScrollBegin={() => setIsLoadingPosts(false)}
-        onEndReachedThreshold={0.5}
-        keyExtractor={(item) => item.id.toString()}
-        onEndReached={() => {
-          if (!isLoadingPosts) {
-            setIsLoadingPosts(true);
-            setRenderDataPosts(prev => [...prev, ...pagination(posts, postPageNumber + 1, pageSizePosts, true)])
-            setIsLoadingPosts(false);
-          }
-        }}
-        showsVerticalScrollIndicator={false}
-        data={renderDataPosts}
-        renderItem={({ item }) => (
-          <View >
-
-            <UserPost
-            
-              firstName={item.firstName}
-              lastName={item.lastName}
-              comments={item.comments}
-              likes={item.likes}
-              bookmarks={item.bookmark}
-              location={item.location}
-            />
-          </View>
-
-        )}
+          )}
         />
 
       </View>
