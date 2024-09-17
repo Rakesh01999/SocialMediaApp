@@ -4,6 +4,7 @@
 -- Mobile Application Development
 React Native -small project
 
+-- Small Project
 # To install React Dev Tools
 npm install -g react-devtools
 
